@@ -14,6 +14,7 @@ import { ArrowLeft, Calendar, Share2, AlertCircle, CheckCircle2 } from "lucide-r
 import { client } from "@/sanity/lib/client";
 import { worksQuery } from "@/lib/queries";
 import { PortableText } from "@portabletext/react";
+import { Suspense } from 'react';
 
 
 
@@ -31,12 +32,13 @@ type Work = {
   fullDescription?: any[];
 };
 
-export default function OurWorksPage() {
+ function OurWorksContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedSlug = searchParams.get("work");
 
   const [works, setWorks] = useState<Work[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
   const [visibleProjects, setVisibleProjects] = useState<number>(3);
   const [visibleSidebarProjects, setVisibleSidebarProjects] = useState<number>(5);
@@ -154,6 +156,7 @@ export default function OurWorksPage() {
   };
 
   // ------------------ Subcomponents ------------------
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const SkeletonCard = ({ variant = "list" }: { variant?: "list" | "detail" }) => (
     <div className="bg-white rounded-lg border border-gray-100 overflow-hidden">
       <div className="flex flex-col md:flex-row">
@@ -415,5 +418,19 @@ export default function OurWorksPage() {
         }
       `}</style>
     </>
+  );
+}
+
+
+
+export default function OurWorksPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-900 border-r-transparent"></div>
+      </div>
+    }>
+      <OurWorksContent />
+    </Suspense>
   );
 }

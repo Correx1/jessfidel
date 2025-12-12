@@ -112,7 +112,7 @@ export default function Works() {
                 </p>
 
                 <Link
-                  href={`/our-works?work=${work.slug}`}
+                  href={`/Our-works?work=${work.slug}`}
                   className="inline-flex items-center gap-2 text-blue-950 font-semibold hover:text-blue-900 transition-colors mt-auto"
                 >
                   <span>View Details</span>
